@@ -10,18 +10,20 @@ namespace CodeBattle.PointWar.Server.Models
         public int Y_Point { get; set; }
         [JsonProperty("Color")]
         public string Color { get; set; }
-        [JsonProperty("PlayerID")]
-        public string PlayerID { get; set; }
+        [JsonProperty("Email")]
+        public string Email { get; set; }
+        public string Pass { get; set; }
         [JsonProperty("Active")]
         public bool Active { get; set; }
 
         public string Serialize { get; set; }
 
-        public Point(int y, int x, string id)
+        public Point(int y, int x, string email, string pass)
         {
             this.Y_Point = y;
             this.X_Point = x;
-            this.PlayerID = id;
+            this.Email = email;
+            this.Pass = pass;
         }
 
         public bool IsPoint(int y_point, int x_point)

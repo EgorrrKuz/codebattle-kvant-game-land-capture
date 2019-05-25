@@ -8,13 +8,15 @@ namespace CodeBattle.PointWar.Server.Models
     {
         public int X_Bot { get; set; }
         public int Y_Bot { get; set; }
-        public string PlayerID { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
 
-        public Bot(int y, int x, string playerId)
+        public Bot(int y, int x, string email, string pass)
         {
             this.Y_Bot = y;
             this.X_Bot = x;
-            this.PlayerID = playerId;
+            this.Email = email;
+            this.Password = pass;
         }
     }
 }

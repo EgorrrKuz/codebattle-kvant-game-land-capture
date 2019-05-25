@@ -37,10 +37,10 @@ namespace CodeBattle.PointWar.Server
         /// </summary>
         public IEnumerable<Point> GetNeighbors(Point p)
         {
-            yield return new Point(p.Y_Point - 1, p.X_Point, p.PlayerID);
-            yield return new Point(p.Y_Point, p.X_Point - 1, p.PlayerID);
-            yield return new Point(p.Y_Point + 1, p.X_Point, p.PlayerID);
-            yield return new Point(p.Y_Point, p.X_Point + 1, p.PlayerID);
+            yield return new Point(p.Y_Point - 1, p.X_Point, p.Email, p.Pass);
+            yield return new Point(p.Y_Point, p.X_Point - 1, p.Email, p.Pass);
+            yield return new Point(p.Y_Point + 1, p.X_Point, p.Email, p.Pass);
+            yield return new Point(p.Y_Point, p.X_Point + 1, p.Email, p.Pass);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace CodeBattle.PointWar.Server
             var visited = new HashSet<Point>();
             stack.Push(pos);
             visited.Add(pos);
-            var id = pos.PlayerID;
+            var id = pos.Email;
             
             while (stack.Count > 0)
             {
@@ -97,7 +97,7 @@ namespace CodeBattle.PointWar.Server
 
                 foreach (var i in visited)
                 {
-                    var _id = i.PlayerID;
+                    var _id = i.Email;
                     
                     if (_id != id)
                     {
@@ -120,7 +120,7 @@ namespace CodeBattle.PointWar.Server
 
             string str = JsonConvert.SerializeObject(format);
 
-            Point newobj = new Point(format.Y_Point, format.X_Point, format.PlayerID);
+            Point newobj = new Point(format.Y_Point, format.X_Point, format.Email, format.Pass);
             newobj.Active = false;
             string newstr = JsonConvert.SerializeObject(newobj);
 
