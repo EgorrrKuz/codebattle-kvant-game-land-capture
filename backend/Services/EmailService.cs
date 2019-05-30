@@ -17,7 +17,7 @@ namespace CodeBattle.PointWar.Server.Services
             var emailMessage = new MimeMessage();
  
             emailMessage.From.Add(new MailboxAddress("Code Battle", ConfigEmail));
-            emailMessage.To.Add(new MailboxAddress("", email));
+            emailMessage.To.Add(new MailboxAddress(ConfigEmail, email));
             emailMessage.Subject = subject;
             emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
             {

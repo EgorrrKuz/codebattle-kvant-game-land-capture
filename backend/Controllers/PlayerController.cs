@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using CodeBattle.PointWar.Server.Models;
 using CodeBattle.PointWar.Server.Interfaces;
 using CodeBattle.PointWar.Server.Services;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace CodeBattle.PointWar.Server.Controllers
 {
@@ -10,6 +12,8 @@ namespace CodeBattle.PointWar.Server.Controllers
     [ApiController]
     public class PlayerController : Controller
     {
+        MD5 md5Hash = MD5.Create();
+
         private readonly ICodeBattle<Player> _PlayerService;
 
         public PlayerController(ICodeBattle<Player> playerService)
@@ -41,6 +45,9 @@ namespace CodeBattle.PointWar.Server.Controllers
         {
             player.Score = 0;
             _PlayerService.Create(player);
+
+            player.Password = GetMd5Hash(md5Hash, player.Password);
+            player.API_Key = GetMd5Hash(md5Hash, player.Email);
 
             return player;
         }

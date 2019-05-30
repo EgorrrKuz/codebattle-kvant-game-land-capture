@@ -13,17 +13,17 @@ namespace CodeBattle.PointWar.Server.Services
         /// <summary>
         /// Go to Up
         /// </summary>
-        public async Task Up(int x, int y, string email, string pass)
+        public async Task Up(int x, int y, string API, string Email)
         {
             // New object
-            Bot bot = new Bot(y, x, email, pass);
+            Bot bot = new Bot(y, x, API, Email);
             Block block = new Block();
 
             // Check blocks, after send "bot"
             if (block.IsBlock(bot.Y_Bot--, bot.X_Bot) == false)
             {
                 // Send to clint
-                await Clients.Caller.SendAsync("Up", bot.X_Bot, bot.Y_Bot--, bot.Email, bot.Password); 
+                await Clients.Caller.SendAsync("Up", bot.X_Bot, bot.Y_Bot--, bot.API); 
                 // Send to Front - end
                 await Clients.All.SendAsync("UpFront", bot.X_Bot, bot.Y_Bot--, bot.Email);
                 
@@ -32,7 +32,7 @@ namespace CodeBattle.PointWar.Server.Services
             else
             {
                 // Send to clint
-                await Clients.Caller.SendAsync("Up", bot.X_Bot, bot.Y_Bot, bot.Email);
+                await Clients.Caller.SendAsync("Up", bot.X_Bot, bot.Y_Bot, bot.API);
                 // Send to Front - end
                 await Clients.All.SendAsync("UpFront", bot.X_Bot, bot.Y_Bot, bot.Email); 
                 
@@ -43,23 +43,23 @@ namespace CodeBattle.PointWar.Server.Services
         /// <summary>
         /// Go to Down
         /// </summary>
-        public async Task Down(int x, int y, string email, string pass)
+        public async Task Down(int x, int y, string API, string Email)
         {
             // New object
-            Bot bot = new Bot(y, x, email, pass);
+            Bot bot = new Bot(y, x, API, Email);
             Block block = new Block();
 
             // Check blocks, after send "bot"
             if (block.IsBlock(bot.Y_Bot--, bot.X_Bot) == false)
             {
-                await Clients.Caller.SendAsync("Down", bot.X_Bot, bot.Y_Bot++, bot.Email); // Send to clint
+                await Clients.Caller.SendAsync("Down", bot.X_Bot, bot.Y_Bot++, bot.API); // Send to clint
                 await Clients.All.SendAsync("DownFront", bot.X_Bot, bot.Y_Bot++, bot.Email); // Send to Front - end
 
                 Console.WriteLine($"Bot ({bot.Email}) - moved down ");
             }
             else
             {
-                await Clients.Caller.SendAsync("Down", bot.X_Bot, bot.Y_Bot, bot.Email); // Send to clint
+                await Clients.Caller.SendAsync("Down", bot.X_Bot, bot.Y_Bot, bot.API); // Send to clint
                 await Clients.All.SendAsync("DownFront", bot.X_Bot, bot.Y_Bot, bot.Email); // Send to Front - end
 
                 Console.WriteLine($"Bot ({bot.Email}) - could not move");
@@ -69,23 +69,23 @@ namespace CodeBattle.PointWar.Server.Services
         /// <summary>
         /// Go to left
         /// </summary>
-        public async Task Left(int x, int y, string email, string pass)
+        public async Task Left(int x, int y, string API, string Email)
         {
             // New object
-            Bot bot = new Bot(y, x, email, pass);
+            Bot bot = new Bot(y, x, API, Email);
             Block block = new Block();
 
             // Check blocks, after send "bot"
             if (block.IsBlock(bot.Y_Bot--, bot.X_Bot) == false)
             {
-                await Clients.Caller.SendAsync("Left", bot.X_Bot--, bot.Y_Bot, bot.Email); // Send to clint
+                await Clients.Caller.SendAsync("Left", bot.X_Bot--, bot.Y_Bot, bot.API); // Send to clint
                 await Clients.All.SendAsync("LeftFront", bot.X_Bot--, bot.Y_Bot, bot.Email); // Send to Front - end
 
                 Console.WriteLine($"Bot ({bot.Email}) - moved left ");
             }
             else
             {
-                await Clients.Caller.SendAsync("Left", bot.X_Bot, bot.Y_Bot, bot.Email); // Send to clint
+                await Clients.Caller.SendAsync("Left", bot.X_Bot, bot.Y_Bot, bot.API); // Send to clint
                 await Clients.All.SendAsync("LeftFront", bot.X_Bot, bot.Y_Bot, bot.Email); // Send to Front - end
 
                 Console.WriteLine($"Bot ({bot.Email}) - could not move");
@@ -95,23 +95,23 @@ namespace CodeBattle.PointWar.Server.Services
         /// <summary>
         /// Go to Right
         /// </summary>
-        public async Task Right(int x, int y, string email, string pass)
+        public async Task Right(int x, int y, string API, string Email)
         {
             // New object
-            Bot bot = new Bot(y, x, email, pass);
+            Bot bot = new Bot(y, x, API, Email);
             Block block = new Block();
 
             // Check blocks, after send "bot"
             if (block.IsBlock(bot.Y_Bot--, bot.X_Bot) == false)
             {
-                await Clients.Caller.SendAsync("Right", bot.X_Bot++, bot.Y_Bot, bot.Email); // Send to clint
+                await Clients.Caller.SendAsync("Right", bot.X_Bot++, bot.Y_Bot, bot.API); // Send to clint
                 await Clients.All.SendAsync("RightFront", bot.X_Bot++, bot.Y_Bot, bot.Email); // Send to Front - end
 
                 Console.WriteLine($"Bot ({bot.Email}) - moved lefrightt ");
             }
             else
             {
-                await Clients.Caller.SendAsync("Right", bot.X_Bot, bot.Y_Bot, bot.Email); // Send to clint
+                await Clients.Caller.SendAsync("Right", bot.X_Bot, bot.Y_Bot, bot.API); // Send to clint
                 await Clients.All.SendAsync("RightFront", bot.X_Bot, bot.Y_Bot, bot.Email); // Send to Front - end
 
                 Console.WriteLine($"Bot ({bot.Email}) - could not move");
@@ -121,10 +121,10 @@ namespace CodeBattle.PointWar.Server.Services
         /// <summary>
         /// Add point
         /// </summary>
-        public async Task AddPoint(int x, int y, string email, string pass)
+        public async Task AddPoint(int x, int y, string API, string Email)
         {
             // New object
-            Point point = new Point(y, x, email, pass);
+            Point point = new Point(y, x, API, Email);
             point.Active = true;
 
             // Check point, after send "point"
@@ -137,12 +137,12 @@ namespace CodeBattle.PointWar.Server.Services
                     File.Create(file);
 
                 // Send to clint
-                await Clients.Caller.SendAsync("AddPoint", point.X_Point, point.Y_Point, point.Email);
+                await Clients.Caller.SendAsync("AddPoint", point.X_Point, point.Y_Point, point.API);
 
                 File.WriteAllText(file, JsonConvert.SerializeObject(point));
 
                 // Send to Front-end
-                await Clients.Caller.SendAsync("AddPointFront", point.X_Point, point.Y_Point, point.Email);
+                await Clients.All.SendAsync("AddPointFront", point.X_Point, point.Y_Point, point.Email);
 
                 Console.WriteLine($"Bot ({point.Email}) - add point [{point.X_Point}; {point.Y_Point}]");
             }
