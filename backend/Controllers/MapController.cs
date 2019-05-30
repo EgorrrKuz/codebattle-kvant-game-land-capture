@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
 using CodeBattle.PointWar.Server.Models;
-using CodeBattle.PointWar.Server.Services;
 using CodeBattle.PointWar.Server.Interfaces;
+using Newtonsoft.Json;
 
 namespace CodeBattle.PointWar.Server.Controllers
 {
@@ -33,6 +31,11 @@ namespace CodeBattle.PointWar.Server.Controllers
                 return NoContent();
             }
             return _MapService.Get(index);
+        }
+
+        public Map MapObject()
+        {
+            return JsonConvert.DeserializeObject<Map>(Post());
         }
     }
 }

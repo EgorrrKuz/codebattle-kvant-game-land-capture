@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using CodeBattle.PointWar.Server.Models;
+using CodeBattle.PointWar.Server.Controllers;
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -11,11 +12,11 @@ namespace CodeBattle.PointWar.Server
 {
     public class Logic : Hub
     {
-        public static Map _map = new Map(/* Need coord / constructor */);
+        MapController Map = new MapController();
 
-        // Map size
-        public static int Height = _map.Height;
-        public static int Width = _map.Width;
+        // Map size - take data from controller
+        public static int Height = Map.MapObject().Height;
+        public static int Width = Map.MapObject().Width;
 
         public readonly IMongoCollection<Player> _Player;
 
