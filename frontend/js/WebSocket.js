@@ -1,48 +1,25 @@
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import '@fortawesome/fontawesome-free/css/all.css'
-import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr'
- 
-const connection = new HubConnectionBuilder()
-  .withUrl('http://localhost:8080/command')
-  .configureLogging(LogLevel.Information)
-  .build()
- 
-connection.start()
- 
-connection.start()
+const hubConnection = new signalR.HubConnectionBuilder()
+    .withUrl("/command")
+    .configureLogging(signalR.LogLevel.Information)
+    .build();
 
-hubConnection.on('UpFront', async function (x, y, email) {
+hubConnection.on('UpFront', function (y, x, id) {
     // Draw bot
-    // Canavas
-
-    var canvas = document.getElementById("myCanvas"), 
-    context = canvas.getContext("2d");
-    context.beginPath();
-    context.rect(x, y, 2, 2);
-    context.closePath();
-    context.strokeStyle = "red"; // TODO: Generate on Back-end
-    context.stroke();
 });
-hubConnection.on('DownFront', async function () {
+hubConnection.on('DownFront', function (y, x, id) {
     // Draw bot
-    // Canavas
 });
-hubConnection.on('LeftFront', async function () {
+hubConnection.on('LeftFront', function (y, x, id) {
     // Draw bot
-    // Canavas
 });
-hubConnection.on('RightFront', async function () {
+hubConnection.on('RightFront', function (y, x, id) {
     // Draw bot
-    // Canavas
 });
-hubConnection.on('AddPointFront', async function () {
+hubConnection.on('AddPointFront', function (y, x, id) {
     // Draw point
-    // Canavas
 });
-hubConnection.on('GetCloseArea', async function () {
+hubConnection.on('GetCloseArea', function (list) {
     // List points - close area
-    // Canavas
 });
 
 hubConnection.start().then(function () {

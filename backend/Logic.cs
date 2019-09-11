@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using CodeBattle.PointWar.Server.Models;
-using CodeBattle.PointWar.Server.Controllers;
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -12,11 +11,11 @@ namespace CodeBattle.PointWar.Server
 {
     public class Logic : Hub
     {
-        MapController Map = new MapController();
+        public static Map _map = new Map(/* Need coord / constructor */);
 
-        // Map size - take data from controller
-        public static int Height = Map.MapObject().Height;
-        public static int Width = Map.MapObject().Width;
+        // Map size
+        public static int Height = _map.Height;
+        public static int Width = _map.Width;
 
         public readonly IMongoCollection<Player> _Player;
 
@@ -38,10 +37,10 @@ namespace CodeBattle.PointWar.Server
         /// </summary>
         public IEnumerable<Point> GetNeighbors(Point p)
         {
-            yield return new Point(p.Y_Point - 1, p.X_Point, p.Email, p.Pass);
-            yield return new Point(p.Y_Point, p.X_Point - 1, p.Email, p.Pass);
-            yield return new Point(p.Y_Point + 1, p.X_Point, p.Email, p.Pass);
-            yield return new Point(p.Y_Point, p.X_Point + 1, p.Email, p.Pass);
+            yield return new Point(p.Y_Point - 1, p.X_Point, p.PlayerID);
+            yield return new Point(p.Y_Point, p.X_Point - 1, p.PlayerID);
+            yield return new Point(p.Y_Point + 1, p.X_Point, p.PlayerID);
+            yield return new Point(p.Y_Point, p.X_Point + 1, p.PlayerID);
         }
 
         /// <summary>
@@ -72,7 +71,7 @@ namespace CodeBattle.PointWar.Server
             var visited = new HashSet<Point>();
             stack.Push(pos);
             visited.Add(pos);
-            var id = pos.Email;
+            var id = pos.PlayerID;
             
             while (stack.Count > 0)
             {
@@ -98,7 +97,7 @@ namespace CodeBattle.PointWar.Server
 
                 foreach (var i in visited)
                 {
-                    var _id = i.Email;
+                    var _id = i.PlayerID;
                     
                     if (_id != id)
                     {
@@ -121,7 +120,7 @@ namespace CodeBattle.PointWar.Server
 
             string str = JsonConvert.SerializeObject(format);
 
-            Point newobj = new Point(format.Y_Point, format.X_Point, format.Email, format.Pass);
+            Point newobj = new Point(format.Y_Point, format.X_Point, format.PlayerID);
             newobj.Active = false;
             string newstr = JsonConvert.SerializeObject(newobj);
 

@@ -9,6 +9,7 @@ namespace CodeBattle.PointWar.Server.Interfaces
     {
         T Create(T player);
         T Get(int id);
+        T Get_Email(string email);
         List<T> Get();
         void Update(int id ,T player);
         void Remove(T player);

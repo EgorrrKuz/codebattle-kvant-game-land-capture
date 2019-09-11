@@ -23,14 +23,8 @@ namespace CodeBattle.PointWar.Server.Models
         [JsonProperty("score")]
         public int Score { get; set; }
 
-        
-        [BsonElement("API_Key")]
-        [JsonProperty("api_key")]
+        [BsonRepresentation(BsonType.Array)]
+        [JsonProperty("APIs")]
         public string API_Key { get; set; }
-
-       /* public Player(string id, string email, string pass, string score, string api)
-        {
-
-        }*/
     }
 }

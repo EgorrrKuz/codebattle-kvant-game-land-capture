@@ -1,12 +1,28 @@
-// Player list
+function generateUUID() {
+    var d = new Date().getTime();
+
+    if (window.performance && typeof window.performance.now === "function") {
+        d += performance.now();
+    }
+
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+
+    return uuid;
+}
+
+// Получение всех пользователей
 function GetUsers() {
     $.ajax({
-        url: url,
+        url: '/api/players',
         type: 'GET',
         contentType: "application/json",
     });
 }
-// One player
+// Получение одного пользователя
 function GetUser(id) {
     $.ajax({
         url: '/api/players/' + id,
@@ -15,23 +31,24 @@ function GetUser(id) {
     });
 }
 
-// Register
+// Добавление пользователя
 function CreateUser(userEmail, userPass) {
      $.ajax({
-         url: url,
+         url: "api/players",
          contentType: "application/json",
          method: "POST",
          data: JSON.stringify({
              Email : userEmail,
              Password : userPass,
+             Api_Key : generateUUID(),
          }),
      })
 }
 
-// Edit player
+// Изменение пользователя
 function EditUser(userId, userEmail, userPass) {
     $.ajax({
-        url: url,
+        url: "api/players",
         contentType: "application/json",
         method: "PUT",
         data: JSON.stringify({
@@ -42,16 +59,16 @@ function EditUser(userId, userEmail, userPass) {
     })
 }
 
-// Delete player
+// Удаление пользователя
 function DeleteUser(id) {
     $.ajax({
-        url: url + id,
+        url: "api/users/" + id,
         contentType: "application/json",
         method: "DELETE",
     })
 }
 
-// Form submit
+// Кнопка регистрации
 $("form").submit(function (e) {
     e.preventDefault();
     var id = this.elements["id"].value;

@@ -17,5 +17,5 @@ import LoginForm from "@/components/LoginForm.vue"; // @ is an alias to /src
     LoginForm
   }
 })
-export default class LoginPage extends Vue {}
+export default class LoginView extends Vue {}
 </script>

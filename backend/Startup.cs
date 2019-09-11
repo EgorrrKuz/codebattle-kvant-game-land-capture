@@ -13,6 +13,7 @@ using CodeBattle.PointWar.Server.Services;
 using CodeBattle.PointWar.Server.Interfaces;
 using CodeBattle.PointWar.Server.Controllers;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Options;
 
 namespace CodeBattle.PointWar.Server
 {
@@ -28,7 +29,13 @@ namespace CodeBattle.PointWar.Server
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.Configure<Player>(
+            Configuration.GetSection(nameof(Player)));
+
+            services.AddSingleton<Player>(sp =>
+                sp.GetRequiredService<IOptions<Player>>().Value);
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
       // In production, the files will be served from this directory
       services.AddSpaStaticFiles(configuration =>
@@ -111,7 +118,7 @@ namespace CodeBattle.PointWar.Server
 #if DEBUG
         if (env.IsDevelopment())
         {
-          spa.UseVueCli(npmScript: "serve", port: 80, regex: "Compiled ");
+          spa.UseVueCli(npmScript: "serve", port: 8080, regex: "Compiled ");
           spa.UseProxyToSpaDevelopmentServer("http://localhost:8080");
         }
 #endif

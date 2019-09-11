@@ -18,16 +18,34 @@ namespace CodeBattle.PointWar.Server.Services
             _Player = database.GetCollection<Player>("Player");
         }
 
+        /// <summary>
+        /// Получаем всю коллекцию игроков
+        /// </summary>
+        /// <returns>Список игроков</returns>
         public List<Player> Get()
         {
             return _Player.Find(player => true).ToList();
         }
 
+        /// <summary>
+        /// Получаем 1 игрока
+        /// </summary>
+        /// <param name="id">ID игрока</param>
+        /// <returns>Объект</returns>
         public Player Get(string id)
         {
             return _Player.Find<Player>(player => player.ID == id).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Получить игрока по email
+        /// </summary>
+        /// <param name="email">Email игрока</param>
+        /// <returns>Объект</returns>
+        public Player Get_Email(string email)
+        {
+            return _Player.Find<Player>(player => player.Email == email).FirstOrDefault();
+        }
         public Player Create(Player player)
         {
             _Player.InsertOne(player);
