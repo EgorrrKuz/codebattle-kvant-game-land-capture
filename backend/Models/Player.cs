@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace CodeBattle.PointWar.Server.Models
 {
@@ -30,6 +31,6 @@ namespace CodeBattle.PointWar.Server.Models
         [BsonRepresentation(BsonType.Array)]
         [BsonElement("API_Key")]
         [JsonProperty("API_Key")]
-        public string[] API_Key { get; set; }
+        public List<string> API_Key { get; set; }
     }
 }

@@ -12,9 +12,9 @@ namespace CodeBattle.PointWar.Server.Services
         static string fileName = "../playersettings.json";
 
         static IPlayersDatabaseSettings config = JsonConvert.DeserializeObject<IPlayersDatabaseSettings>(File.ReadAllText(fileName));
-        
+
         public PlayerService player = new PlayerService(config);
-        
+
         /// <summary>
         /// Go to Up
         /// </summary>
@@ -29,12 +29,23 @@ namespace CodeBattle.PointWar.Server.Services
             {
                 if (pass == player.Get_from_email(email).Password)
                 {
-                    // Send to clint
-                    await Clients.Caller.SendAsync("Up", bot.X_Bot, bot.Y_Bot--, bot.Email_Player);
-                    // Send to Front - end
-                    await Clients.All.SendAsync("UpFront", bot.X_Bot, bot.Y_Bot--, bot.Email_Player);
+                    int i = 0;
+                    while (true)
+                    {
+                        if (api == player.Get_from_email(email).API_Key[i])
+                        {
+                            bot.Y_Bot = bot.Y_Bot--;
 
-                    Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved up ");
+                            // Send to clint
+                            await Clients.Caller.SendAsync("Up", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+                            // Send to Front - end
+                            await Clients.All.SendAsync("BotCoord", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+
+                            Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved up ");
+                        }
+
+                        i++;
+                    }
                 }
             }
             else
@@ -55,10 +66,26 @@ namespace CodeBattle.PointWar.Server.Services
             // Check blocks, after send "bot"
             if (block.IsBlock(bot.Y_Bot--, bot.X_Bot) == false)
             {
-                await Clients.Caller.SendAsync("Down", bot.X_Bot, bot.Y_Bot++, bot.Email_Player); // Send to clint
-                await Clients.All.SendAsync("DownFront", bot.X_Bot, bot.Y_Bot++, bot.Email_Player); // Send to Front - end
+                if (pass == player.Get_from_email(email).Password)
+                {
+                    int i = 0;
+                    while (true)
+                    {
+                        if (api == player.Get_from_email(email).API_Key[i])
+                        {
+                            bot.Y_Bot = bot.Y_Bot++;
 
-                Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved down ");
+                            // Send to clint
+                            await Clients.Caller.SendAsync("Down", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+                            // Send to Front - end
+                            await Clients.All.SendAsync("BotCoord", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+
+                            Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved down ");
+                        }
+
+                        i++;
+                    }
+                }
             }
             else
             {
@@ -78,10 +105,26 @@ namespace CodeBattle.PointWar.Server.Services
             // Check blocks, after send "bot"
             if (block.IsBlock(bot.Y_Bot--, bot.X_Bot) == false)
             {
-                await Clients.Caller.SendAsync("Left", bot.X_Bot--, bot.Y_Bot, bot.Email_Player); // Send to clint
-                await Clients.All.SendAsync("LeftFront", bot.X_Bot--, bot.Y_Bot, bot.Email_Player); // Send to Front - end
+                if (pass == player.Get_from_email(email).Password)
+                {
+                    int i = 0;
+                    while (true)
+                    {
+                        if (api == player.Get_from_email(email).API_Key[i])
+                        {
+                            bot.X_Bot = bot.X_Bot--;
 
-                Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved left ");
+                            // Send to clint
+                            await Clients.Caller.SendAsync("Left", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+                            // Send to Front - end
+                            await Clients.All.SendAsync("BotCoord", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+
+                            Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved left ");
+                        }
+
+                        i++;
+                    }
+                }
             }
             else
             {
@@ -101,10 +144,26 @@ namespace CodeBattle.PointWar.Server.Services
             // Check blocks, after send "bot"
             if (block.IsBlock(bot.Y_Bot--, bot.X_Bot) == false)
             {
-                await Clients.Caller.SendAsync("Right", bot.X_Bot++, bot.Y_Bot, bot.Email_Player); // Send to clint
-                await Clients.All.SendAsync("RightFront", bot.X_Bot++, bot.Y_Bot, bot.Email_Player); // Send to Front - end
+                if (pass == player.Get_from_email(email).Password)
+                {
+                    int i = 0;
+                    while (true)
+                    {
+                        if (api == player.Get_from_email(email).API_Key[i])
+                        {
+                            bot.X_Bot = bot.X_Bot++;
 
-                Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved lefrightt ");
+                            // Send to clint
+                            await Clients.Caller.SendAsync("Right", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+                            // Send to Front - end
+                            await Clients.All.SendAsync("BotCoord", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+
+                            Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved right ");
+                        }
+
+                        i++;
+                    }
+                }
             }
             else
             {
@@ -115,30 +174,42 @@ namespace CodeBattle.PointWar.Server.Services
         /// <summary>
         /// Add point
         /// </summary>
-        public async Task AddPoint(int x, int y, string id)
+        public async Task AddPoint(int x, int y, string email, string pass, string api)
         {
             // New object
-            Point point = new Point(y, x, id);
+            Point point = new Point(y, x, email, pass, api);
             point.Active = true;
 
             // Check point, after send "point"
             if (point.IsPoint(point.Y_Point, point.X_Point) == false)
             {
-                // Check file
-                string file = "points.json";
+                if (pass == player.Get_from_email(email).Password)
+                {
+                    int i = 0;
+                    while (true)
+                    {
+                        if (api == player.Get_from_email(email).API_Key[i])
+                        {
+                            // Check file
+                            string file = "points.json";
 
-                if (!File.Exists(file))
-                    File.Create(file);
+                            if (!File.Exists(file))
+                                File.Create(file);
 
-                // Send to clint
-                await Clients.Caller.SendAsync("AddPoint", point.X_Point, point.Y_Point, point.PlayerID);
+                            // Send to clint
+                            await Clients.Caller.SendAsync("AddPoint", point.X_Point, point.Y_Point, point.Player_Email);
 
-                File.WriteAllText(file, JsonConvert.SerializeObject(point));
+                            File.WriteAllText(file, JsonConvert.SerializeObject(point));
 
-                // Send to Front-end
-                await Clients.Caller.SendAsync("AddPointFront", point.X_Point, point.Y_Point, point.PlayerID);
+                            // Send to Front-end
+                            await Clients.Caller.SendAsync("AddPointFront", point.X_Point, point.Y_Point, point.Player_Email);
 
-                Console.WriteLine($"Bot ({point.PlayerID}) - add point [{point.X_Point}; {point.Y_Point}]");
+                            Console.WriteLine($"Bot ({point.Player_Email}) - add point [{point.X_Point}; {point.Y_Point}]");
+                        }
+
+                        i++;
+                    }
+                }
             }
         }
     }

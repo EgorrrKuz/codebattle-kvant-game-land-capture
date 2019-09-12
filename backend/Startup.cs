@@ -6,12 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using VueCliMiddleware;
-
 using CodeBattle.PointWar.Server.Models;
-using System.Collections.Generic;
 using CodeBattle.PointWar.Server.Services;
 using CodeBattle.PointWar.Server.Interfaces;
-using CodeBattle.PointWar.Server.Controllers;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
 
@@ -36,8 +33,16 @@ namespace CodeBattle.PointWar.Server
         sp.GetRequiredService<IOptions<PlayersDatabaseSettings>>().Value);
       
       services.AddSingleton<PlayerService>();
-      
-      services.AddMvc()
+
+      services.Configure<BotsDatabaseSettings>(
+        Configuration.GetSection(nameof(BotsDatabaseSettings)));
+
+      services.AddSingleton<IBotsDatabaseSettings>(sp =>
+        sp.GetRequiredService<IOptions<BotsDatabaseSettings>>().Value);
+
+      services.AddSingleton<BotService>();
+
+            services.AddMvc()
         .AddJsonOptions(options => options.UseMemberCasing())
         .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 

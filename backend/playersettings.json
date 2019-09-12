@@ -1,6 +1,6 @@
 {
   "PlayersDatabaseSettings": { 
-      "PlayerCollectionName": "Players",  
+      "PlayersCollectionName": "Players",  
       "ConnectionString": "mongodb://localhost:27017",
       "DatabaseName": "CodeBattle"
   }
