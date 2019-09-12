@@ -11,20 +11,25 @@ namespace CodeBattle.PointWar.Server.Models
         [JsonProperty("id")]
         public string ID { get; set; }
 
+        [BsonRepresentation(BsonType.String)]
         [BsonElement("Email")]
-        [JsonProperty("email")]
+        [JsonProperty("Email")]
         public string Email { get; set; }
 
+        [BsonRepresentation(BsonType.String)]
         [BsonElement("Password")]
-        [JsonProperty("password")]
+        [JsonProperty("Password")]
         public string Password { get; set; }
 
+        [BsonRepresentation(BsonType.Int64)]
         [BsonElement("Score")]
-        [JsonProperty("score")]
+        [JsonProperty("Score")]
         public int Score { get; set; }
 
+        // API всех ботов привязанных к одному игроку в одном массиве
         [BsonRepresentation(BsonType.Array)]
-        [JsonProperty("APIs")]
-        public string API_Key { get; set; }
+        [BsonElement("API_Key")]
+        [JsonProperty("API_Key")]
+        public string[] API_Key { get; set; }
     }
 }

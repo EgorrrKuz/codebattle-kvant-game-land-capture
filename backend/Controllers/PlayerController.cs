@@ -1,44 +1,29 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using CodeBattle.PointWar.Server.Models;
-using CodeBattle.PointWar.Server.Interfaces;
+﻿using CodeBattle.PointWar.Server.Models;
 using CodeBattle.PointWar.Server.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CodeBattle.PointWar.Server.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class PlayerController : Controller
+    public class PlayersController : ControllerBase
     {
-        private readonly ICodeBattle<Player> _PlayerService;
+        private readonly PlayerService _playerService;
 
-        public PlayerController(ICodeBattle<Player> playerService)
+        public PlayersController(PlayerService playerService)
         {
-            this._PlayerService = playerService;
+            _playerService = playerService;
         }
 
         [HttpGet]
-        public ActionResult<List<Player>> Get()
+        public ActionResult<List<Player>> Get() =>
+            _playerService.Get();
+
+        [HttpGet("{id:length(24)}", Name = "GetPlayer")]
+        public ActionResult<Player> Get(string id)
         {
-            return _PlayerService.Get();
-        }
-
-        [HttpGet("{id:max(24)}")]
-        public ActionResult<Player> Get(int id)
-        {
-            var player = _PlayerService.Get(id);
-
-            if (player == null)
-            {
-                return NotFound();
-            }
-
-            return player;
-        }
-
-        public ActionResult<Player> Get_Email(string email)
-        {
-            var player = _PlayerService.Get_Email(email);
+            var player = _playerService.Get(id);
 
             if (player == null)
             {
@@ -51,41 +36,39 @@ namespace CodeBattle.PointWar.Server.Controllers
         [HttpPost]
         public ActionResult<Player> Create(Player player)
         {
-            player.Score = 0;
-            _PlayerService.Create(player);
+            _playerService.Create(player);
 
-            return player;
+            return CreatedAtRoute("GetPlayer", new { id = player.ID.ToString() }, player);
         }
 
-        [HttpPut("{id:max(24)}")]
-        public IActionResult Update(int id, Player playerIn)
+        [HttpPut("{id:length(24)}")]
+        public IActionResult Update(string id, Player playerIn)
         {
-            var player = _PlayerService.Get(id);
+            var player = _playerService.Get(id);
 
             if (player == null)
             {
                 return NotFound();
             }
 
-            _PlayerService.Update(id, playerIn);
+            _playerService.Update(id, playerIn);
 
             return NoContent();
         }
 
-        [HttpDelete("{id:max(24)}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{id:length(24)}")]
+        public IActionResult Delete(string id)
         {
-            var player = _PlayerService.Get(id);
+            var player = _playerService.Get(id);
 
             if (player == null)
             {
                 return NotFound();
             }
 
-            _PlayerService.Remove(player);
+            _playerService.Remove(player.ID);
 
             return NoContent();
         }
     }
-
 }

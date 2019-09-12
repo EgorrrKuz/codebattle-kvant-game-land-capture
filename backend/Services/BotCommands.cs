@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using CodeBattle.PointWar.Server.Models;
-using CodeBattle.PointWar.Server.Controllers;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using System.IO;
@@ -10,8 +9,12 @@ namespace CodeBattle.PointWar.Server.Services
 {
     public class BotCommands : Hub
     {
-        PlayerService player = new PlayerController();
+        static string fileName = "../playersettings.json";
 
+        static IPlayersDatabaseSettings config = JsonConvert.DeserializeObject<IPlayersDatabaseSettings>(File.ReadAllText(fileName));
+        
+        public PlayerService player = new PlayerService(config);
+        
         /// <summary>
         /// Go to Up
         /// </summary>
@@ -24,20 +27,18 @@ namespace CodeBattle.PointWar.Server.Services
             // Check blocks, after send "bot"
             if (block.IsBlock(bot.Y_Bot--, bot.X_Bot) == false)
             {
-                // Send to clint
-                await Clients.Caller.SendAsync("Up", bot.X_Bot, bot.Y_Bot--, bot.Email_Player); 
-                // Send to Front - end
-                await Clients.All.SendAsync("UpFront", bot.X_Bot, bot.Y_Bot--, bot.Email_Player);
-                
-                Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved up ");
+                if (pass == player.Get_from_email(email).Password)
+                {
+                    // Send to clint
+                    await Clients.Caller.SendAsync("Up", bot.X_Bot, bot.Y_Bot--, bot.Email_Player);
+                    // Send to Front - end
+                    await Clients.All.SendAsync("UpFront", bot.X_Bot, bot.Y_Bot--, bot.Email_Player);
+
+                    Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved up ");
+                }
             }
             else
             {
-                // Send to clint
-                await Clients.Caller.SendAsync("Up", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
-                // Send to Front - end
-                await Clients.All.SendAsync("UpFront", bot.X_Bot, bot.Y_Bot, bot.Email_Player); 
-                
                 Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - could not move");
             }
         }
@@ -61,9 +62,6 @@ namespace CodeBattle.PointWar.Server.Services
             }
             else
             {
-                await Clients.Caller.SendAsync("Down", bot.X_Bot, bot.Y_Bot, bot.Email_Player); // Send to clint
-                await Clients.All.SendAsync("DownFront", bot.X_Bot, bot.Y_Bot, bot.Email_Player); // Send to Front - end
-
                 Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - could not move");
             }
         }
@@ -87,9 +85,6 @@ namespace CodeBattle.PointWar.Server.Services
             }
             else
             {
-                await Clients.Caller.SendAsync("Left", bot.X_Bot, bot.Y_Bot, bot.Email_Player); // Send to clint
-                await Clients.All.SendAsync("LeftFront", bot.X_Bot, bot.Y_Bot, bot.Email_Player); // Send to Front - end
-
                 Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - could not move");
             }
         }
@@ -113,9 +108,6 @@ namespace CodeBattle.PointWar.Server.Services
             }
             else
             {
-                await Clients.Caller.SendAsync("Right", bot.X_Bot, bot.Y_Bot, bot.Email_Player); // Send to clint
-                await Clients.All.SendAsync("RightFront", bot.X_Bot, bot.Y_Bot, bot.Email_Player); // Send to Front - end
-
                 Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - could not move");
             }
         }

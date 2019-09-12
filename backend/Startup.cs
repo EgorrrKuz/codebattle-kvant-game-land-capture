@@ -29,13 +29,17 @@ namespace CodeBattle.PointWar.Server
 
     public void ConfigureServices(IServiceCollection services)
     {
-            services.Configure<Player>(
-            Configuration.GetSection(nameof(Player)));
+      services.Configure<PlayersDatabaseSettings>(
+        Configuration.GetSection(nameof(PlayersDatabaseSettings)));
 
-            services.AddSingleton<Player>(sp =>
-                sp.GetRequiredService<IOptions<Player>>().Value);
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+      services.AddSingleton<IPlayersDatabaseSettings>(sp =>
+        sp.GetRequiredService<IOptions<PlayersDatabaseSettings>>().Value);
+      
+      services.AddSingleton<PlayerService>();
+      
+      services.AddMvc()
+        .AddJsonOptions(options => options.UseMemberCasing())
+        .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
       // In production, the files will be served from this directory
       services.AddSpaStaticFiles(configuration =>
@@ -66,7 +70,6 @@ namespace CodeBattle.PointWar.Server
       });
 
       services.AddScoped<ICodeBattle<Map>, MapService>();
-      services.AddScoped<ICodeBattle<Player>, PlayerService>();
       services.AddScoped<ICodeBattle<User>, RegService>();
     }
 
