@@ -37,9 +37,11 @@ namespace CodeBattle.PointWar.Server.Services
                             bot.Y_Bot = bot.Y_Bot--;
 
                             // Send to clint
-                            await Clients.Caller.SendAsync("Up", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+                            await Clients.Caller.SendAsync(
+                                "Up", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
                             // Send to Front - end
-                            await Clients.All.SendAsync("BotCoord", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+                            await Clients.All.SendAsync(
+                                "BotCoord", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
 
                             Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved up ");
                         }
@@ -76,9 +78,11 @@ namespace CodeBattle.PointWar.Server.Services
                             bot.Y_Bot = bot.Y_Bot++;
 
                             // Send to clint
-                            await Clients.Caller.SendAsync("Down", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+                            await Clients.Caller.SendAsync(
+                                "Down", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
                             // Send to Front - end
-                            await Clients.All.SendAsync("BotCoord", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+                            await Clients.All.SendAsync(
+                                "BotCoord", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
 
                             Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved down ");
                         }
@@ -115,9 +119,11 @@ namespace CodeBattle.PointWar.Server.Services
                             bot.X_Bot = bot.X_Bot--;
 
                             // Send to clint
-                            await Clients.Caller.SendAsync("Left", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+                            await Clients.Caller.SendAsync(
+                                "Left", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
                             // Send to Front - end
-                            await Clients.All.SendAsync("BotCoord", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+                            await Clients.All.SendAsync(
+                                "BotCoord", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
 
                             Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved left ");
                         }
@@ -154,9 +160,11 @@ namespace CodeBattle.PointWar.Server.Services
                             bot.X_Bot = bot.X_Bot++;
 
                             // Send to clint
-                            await Clients.Caller.SendAsync("Right", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+                            await Clients.Caller.SendAsync(
+                                "Right", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
                             // Send to Front - end
-                            await Clients.All.SendAsync("BotCoord", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
+                            await Clients.All.SendAsync(
+                                "BotCoord", bot.X_Bot, bot.Y_Bot, bot.Email_Player);
 
                             Console.WriteLine($"Bot ({bot.API_Key} + {bot.Email_Player}) - moved right ");
                         }
@@ -197,12 +205,15 @@ namespace CodeBattle.PointWar.Server.Services
                                 File.Create(file);
 
                             // Send to clint
-                            await Clients.Caller.SendAsync("AddPoint", point.X_Point, point.Y_Point, point.Player_Email);
+                            await Clients.Caller.SendAsync(
+                                "AddPoint", point.X_Point, point.Y_Point, point.Player_Email);
 
-                            File.WriteAllText(file, JsonConvert.SerializeObject(point));
+                            File.WriteAllText(
+                                file, JsonConvert.SerializeObject(point));
 
                             // Send to Front-end
-                            await Clients.Caller.SendAsync("AddPointFront", point.X_Point, point.Y_Point, point.Player_Email);
+                            await Clients.Caller.SendAsync(
+                                "AddPointFront", point.X_Point, point.Y_Point, point.Player_Email);
 
                             Console.WriteLine($"Bot ({point.Player_Email}) - add point [{point.X_Point}; {point.Y_Point}]");
                         }
