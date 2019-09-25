@@ -1,1 +1,0 @@
-запускать CodeBattle.csproj
