@@ -15,6 +15,6 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Reg from "@/Controllers/playerController";
+// import Reg from "@/Controllers/playerController";
 export default class RegistrationView extends Vue {}
 </script>
