@@ -1,15 +1,12 @@
 <template>
-  <div>
+  <div >
+    <h1>Login</h1><br>
     <form action="/post" v-if="!loading">
-      <label>
-        <b>Username</b>
-      </label>
-      <input type="text" v-model="username">
-      <label>
-        <b>Password</b>
-      </label>
-      <input type="password" v-model="password">
-      <input type="submit" v-on:click.prevent="login">
+      <v-layout column align-center>
+        <input v-model="username" type="password" placeholder="Enter login">
+        <input v-model="password" type="password" placeholder="Enter password">
+        <input type="submit" v-on:click.prevent="login">
+      </v-layout>
     </form>
     <Loading v-if="loading"></Loading>
   </div>

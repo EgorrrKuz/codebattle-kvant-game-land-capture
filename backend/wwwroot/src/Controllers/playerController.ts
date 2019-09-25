@@ -1,23 +1,6 @@
 import axios from "axios";
 
 class PlayerController {
-  public generateUUID(): string {
-    let d = new Date().getTime();
-
-    if (window.performance && typeof window.performance.now === "function") {
-      d += performance.now();
-    }
-
-    const uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
-      // tslint:disable-next-line:no-bitwise
-      const r = (d + Math.random() * 16) % 16 | 0;
-      d = Math.floor(d / 16);
-      // tslint:disable-next-line:no-bitwise
-      return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-    });
-    return uuid;
-  }
-
   public GetUsers() {
     return axios.get("/api/players");
   }
@@ -29,8 +12,7 @@ class PlayerController {
   public CreateUser(userEmail: string, userPass: string) {
     return axios.post("api/players", {
       Email: userEmail,
-      Password: userPass,
-      Api_Key: this.generateUUID()
+      Password: userPass
     });
   }
 
@@ -57,3 +39,5 @@ class PlayerController {
   //        EditUser(id, email, password);
   //  });
 }
+
+export default PlayerController;

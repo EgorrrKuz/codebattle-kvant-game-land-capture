@@ -1,16 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Connections;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
+﻿using System;
 using VueCliMiddleware;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.Extensions.DependencyInjection;
 using CodeBattle.PointWar.Server.Models;
 using CodeBattle.PointWar.Server.Services;
 using CodeBattle.PointWar.Server.Interfaces;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.Extensions.Options;
 
 namespace CodeBattle.PointWar.Server
 {
@@ -76,6 +77,12 @@ namespace CodeBattle.PointWar.Server
 
       services.AddScoped<ICodeBattle<Map>, MapService>();
       services.AddScoped<ICodeBattle<User>, RegService>();
+      services.AddDistributedMemoryCache();
+      services.AddSession(options =>
+      {
+        options.CookieName = ".CodeBattle.Session";
+        options.IdleTimeout = TimeSpan.FromSeconds(3600);
+      });
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)

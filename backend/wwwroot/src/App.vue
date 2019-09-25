@@ -9,6 +9,7 @@
       fixed
       app
     >
+
       <v-list>
         <v-list-tile value="true" v-for="(item, i) in items" :key="i" :to="item.link">
           <v-list-tile-action>
@@ -55,8 +56,9 @@ export default class App extends Vue {
     { title: "Game", icon: "face", link: "/game" },
     { title: "Leader Board", icon: "stars", link: "/leaderboard" },
     { title: "Maps", icon: "room", link: "/maps" },
-    { title: "Registration", icon: "how_to_reg", link: "/registration" },
-    { title: "Rules", icon: "settings", link: "/rules" }
+    { title: "Login", link: "/login" },
+    { title: "Registration", link: "/registration" }
+    /*{ title: "Rules", icon: "settings", link: "/rules" }*/
   ];
 }
 </script>

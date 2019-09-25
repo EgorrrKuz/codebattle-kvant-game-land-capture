@@ -32,7 +32,7 @@ namespace CodeBattle.PointWar.Server.Services
                     int i = 0;
                     while (true)
                     {
-                        if (api == player.Get_from_email(email).API_Key[i])
+                        if (api == player.Get_from_email(email).API_Keys[i])
                         {
                             bot.Y_Bot = bot.Y_Bot--;
 
@@ -73,7 +73,7 @@ namespace CodeBattle.PointWar.Server.Services
                     int i = 0;
                     while (true)
                     {
-                        if (api == player.Get_from_email(email).API_Key[i])
+                        if (api == player.Get_from_email(email).API_Keys[i])
                         {
                             bot.Y_Bot = bot.Y_Bot++;
 
@@ -114,7 +114,7 @@ namespace CodeBattle.PointWar.Server.Services
                     int i = 0;
                     while (true)
                     {
-                        if (api == player.Get_from_email(email).API_Key[i])
+                        if (api == player.Get_from_email(email).API_Keys[i])
                         {
                             bot.X_Bot = bot.X_Bot--;
 
@@ -155,7 +155,7 @@ namespace CodeBattle.PointWar.Server.Services
                     int i = 0;
                     while (true)
                     {
-                        if (api == player.Get_from_email(email).API_Key[i])
+                        if (api == player.Get_from_email(email).API_Keys[i])
                         {
                             bot.X_Bot = bot.X_Bot++;
 
@@ -196,7 +196,7 @@ namespace CodeBattle.PointWar.Server.Services
                     int i = 0;
                     while (true)
                     {
-                        if (api == player.Get_from_email(email).API_Key[i])
+                        if (api == player.Get_from_email(email).API_Keys[i])
                         {
                             // Check file
                             string file = "points.json";

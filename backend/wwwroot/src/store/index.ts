@@ -3,6 +3,7 @@ import Vuex, { StoreOptions } from "vuex";
 import { RootState } from "./types";
 import { counter } from "./counter/index";
 import { user } from "./user/index";
+import Reg from "@/Controllers/playerController";
 
 Vue.use(Vuex);
 

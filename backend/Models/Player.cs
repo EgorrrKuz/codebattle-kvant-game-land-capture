@@ -31,6 +31,6 @@ namespace CodeBattle.PointWar.Server.Models
         [BsonRepresentation(BsonType.Array)]
         [BsonElement("API_Key")]
         [JsonProperty("API_Key")]
-        public List<string> API_Key { get; set; }
+        public List<string> API_Keys { get; set; }
     }
 }
