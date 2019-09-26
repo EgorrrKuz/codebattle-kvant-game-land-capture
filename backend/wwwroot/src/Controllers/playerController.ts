@@ -9,7 +9,7 @@ class PlayerController {
     axios.get("/api/players/" + id);
   }
 
-  public CreateUser(userEmail: string, userPass: string) {
+  public CreateUser(userEmail: string, userPass: string): object {
     return axios.post("api/players", {
       Email: userEmail,
       Password: userPass
@@ -39,5 +39,3 @@ class PlayerController {
   //        EditUser(id, email, password);
   //  });
 }
-
-export default PlayerController;

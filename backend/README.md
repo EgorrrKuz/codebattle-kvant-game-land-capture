@@ -18,9 +18,17 @@ $env:ASPNETCORE_URLS="https://*:5123" ; dotnet run
 SET ASPNETCORE_URLS=https://*:5123 && dotnet run
 ```
 
+###### or
+```
 dotnet CodeBattle.dll --server.urls "http://localhost:5101;http://*:5102"
+```
 
+###### or
 ```
 docker build -t pointwar .
+```
+
+###### or
+```
 docker run --rm -it -p 443:443/tcp -p 80:80/tcp pointwar:latest
 ```
