@@ -103,7 +103,7 @@ namespace CodeBattle.PointWar.Server
                     {
                         var filter = new BsonDocument("id", id);
                         Player findScore = _Player.Find(filter).FirstOrDefault();
-                        findScore.Score++;
+                        //findScore.Score++;
 
                         DisablePoint(i);
                         _Player.ReplaceOne(filter, findScore);

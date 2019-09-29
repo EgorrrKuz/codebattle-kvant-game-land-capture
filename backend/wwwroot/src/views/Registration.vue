@@ -6,20 +6,18 @@
         <input v-model="login" placeholder="Enter email">
         <input v-model="pass" type="password" placeholder="Enter password">
         <input v-model="conf_pass" type="password" placeholder="Confirm password">
-        <v-btn type="submit" class="primary" v-on:click.prevent="message = check(pass, conf_pass)">Submit</v-btn>
-        <br><h2>{{message}}</h2>
+        <v-btn type="submit" class="primary" v-on:click.prevent="register(login, pass, conf_pass)">Submit</v-btn>
       </v-layout>
     </v-slide-y-transition>
   </v-container>
 </template>
 
 <script lang="ts">
-  import { Component, Vue } from "vue-property-decorator";
-  import axios from "axios";
+  import PlayerController from "@/Controllers/playerController";
+
   export default {
      data() {
         return {
-          message: "",
           login: "",
           pass: "",
           conf_pass: ""
@@ -27,14 +25,18 @@
     },
 
     methods: {
-      check(login: string ,pass: string, confPass: string) {
-        if(pass !== confPass){
-          return "Incorrect password!";
+      register(login: string, pass: string, confPass: string): any {
+        if(pass !== confPass) {
+          //alert("Incorrect password");
+          alert(PlayerController.GetUser(login));
+        } else if(pass.length < 8) {
+          alert("Your password is less than 8 symbols");
+        } else if(PlayerController.GetUser(login) == login) {
+          alert("You did registered");
         } else {
-            return axios.post("api/players", {
-              Email: login,
-              Password: confPass
-            });
+          alert("You registered");
+
+          return PlayerController.CreateUser(login, pass);
         }
       }
     }

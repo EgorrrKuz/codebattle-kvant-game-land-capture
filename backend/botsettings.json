@@ -1,7 +1,0 @@
-{
-  "BotsDatabaseSettings": {
-    "BotsCollectionName": "Bots",
-    "ConnectionString": "mongodb://localhost:27017",
-    "DatabaseName": "CodeBattle"
-  }
-}

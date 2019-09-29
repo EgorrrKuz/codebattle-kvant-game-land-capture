@@ -20,10 +20,10 @@ namespace CodeBattle.PointWar.Server.Controllers
         public ActionResult<List<Player>> Get() =>
             _playerService.Get();
 
-        [HttpGet("{id:length(24)}", Name = "GetPlayer")]
-        public ActionResult<Player> Get(string id)
+        [HttpGet("{email:length(24)}", Name = "GetPlayer")]
+        public ActionResult<Player> Get(string email)
         {
-            var player = _playerService.Get(id);
+            var player = _playerService.Get(email);
 
             if (player == null)
             {

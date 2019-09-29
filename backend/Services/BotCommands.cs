@@ -8,7 +8,7 @@ using System.IO;
 namespace CodeBattle.PointWar.Server.Services
 {
     public class BotCommands : Hub
-    {
+    {/*
         static string fileName = "../playersettings.json";
 
         static IPlayersDatabaseSettings config = JsonConvert.DeserializeObject<IPlayersDatabaseSettings>(File.ReadAllText(fileName));
@@ -32,7 +32,7 @@ namespace CodeBattle.PointWar.Server.Services
                     int i = 0;
                     while (true)
                     {
-                        if (api == player.Get_from_email(email).API_Keys[i])
+                        if (api == player.Get_from_email(email).Email)
                         {
                             bot.Y_Bot = bot.Y_Bot--;
 
@@ -73,7 +73,7 @@ namespace CodeBattle.PointWar.Server.Services
                     int i = 0;
                     while (true)
                     {
-                        if (api == player.Get_from_email(email).API_Keys[i])
+                        if (api == player.Get_from_email(email).Email)
                         {
                             bot.Y_Bot = bot.Y_Bot++;
 
@@ -114,7 +114,7 @@ namespace CodeBattle.PointWar.Server.Services
                     int i = 0;
                     while (true)
                     {
-                        if (api == player.Get_from_email(email).API_Keys[i])
+                        if (api == player.Get_from_email(email).Email)
                         {
                             bot.X_Bot = bot.X_Bot--;
 
@@ -155,7 +155,7 @@ namespace CodeBattle.PointWar.Server.Services
                     int i = 0;
                     while (true)
                     {
-                        if (api == player.Get_from_email(email).API_Keys[i])
+                        if (api == player.Get_from_email(email).Email)
                         {
                             bot.X_Bot = bot.X_Bot++;
 
@@ -196,7 +196,7 @@ namespace CodeBattle.PointWar.Server.Services
                     int i = 0;
                     while (true)
                     {
-                        if (api == player.Get_from_email(email).API_Keys[i])
+                        if (api == player.Em(email).Email)
                         {
                             // Check file
                             string file = "points.json";
@@ -222,6 +222,6 @@ namespace CodeBattle.PointWar.Server.Services
                     }
                 }
             }
-        }
+        }*/
     }
 }
